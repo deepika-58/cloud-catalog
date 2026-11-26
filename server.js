@@ -3,10 +3,8 @@ const express = require('express');
 
 const app = express();
 
-// Serve static files from the public folder
 app.use(express.static('public'));
 
-// Cloud service catalog
 const services = [
     {
         serviceId: 1,
@@ -34,24 +32,26 @@ const services = [
     }
 ];
 
-// API 1: Get cloud services
 app.get('/api/services', (req, res) => {
     res.json(services);
 });
 
-// API 2: Get system status
 app.get('/api/status', (req, res) => {
     res.json({
         status: "Operational",
-        developer: "DEEPIKA J PRAKASH",
+        developer: "Deepika J Prakash",
         environment: "Cloud PaaS"
     });
 });
 
-// Port configuration
 const PORT = process.env.PORT || 8080;
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Start a local server when running directly
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export the Express application for Vercel
+module.exports = app;
